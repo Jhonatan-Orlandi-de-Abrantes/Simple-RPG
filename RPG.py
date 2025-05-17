@@ -6,13 +6,65 @@ class inimigo_c:
         self.vida = vida
         self.ataque = ataque
     
-    def atacar():
+    def atacar(self):
         print(f'Vez do {inimigo.nome}!')
         t.sleep(0.5)
         print(f'{jogador.nome} recebe {inimigo.ataque} de dano!')
         jogador.vida -= inimigo.ataque
         t.sleep(0.5)
         print(f'Vida restante: {jogador.vida}')
+    
+    def curar(self):
+        print('O inimigo escolheu: Curar!')
+        match inimigo.nome:
+            case 'slime':
+                ()
+            case ():
+                ()
+
+        inimigo.vida += ()
+        print(f'Vida restante do inimigo: {inimigo.vida}')
+
+def opt_bat():
+    global escolha
+
+    os.system('cls')
+    t.sleep(0.5)
+
+    escolha = int(input('''Selecione uma das opções para seguir com a batalha:
+[1] Atacar inimigo!
+[2] Usar cura (+25)
+
+Escolha: '''))
+
+def vez_do_player():
+    os.system('cls')
+    t.sleep(0.5)
+
+    match escolha:
+        case 1:
+            player.atacar()
+        case 2:
+            player.curar()
+        case _:
+            print('Digite uma opção válida!')
+            t.sleep(1)
+            selecionar_inimigo()
+
+def batalha():
+    os.system('cls')
+    t.sleep(0.5)
+    
+    print('Início da batalha!')
+    t.sleep(1)
+    
+    vez = 'player'
+    
+    opt_bat()
+    
+    if vez == 'player':
+        opt_bat()
+        vez_do_player()
 
 def selecionar_inimigo():
     global inimigo
@@ -41,8 +93,8 @@ Escolha: '''))
             print('Digite uma opção válida!')
             t.sleep(1)
             selecionar_inimigo()
-
-    inimigo = inimigo_c(inimigo, vida=50, ataque=10)
+        
+    batalha()
 
 class player:
     def __init__(self, nome, vida, habilidade):
@@ -52,7 +104,7 @@ class player:
     
     def curar(self):
         self.vida += 25
-        print()
+        print(f'Vida: {self.vida}')
 
     def atacar(self):
         match jogador.habilidade:

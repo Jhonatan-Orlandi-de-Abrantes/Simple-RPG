@@ -26,6 +26,23 @@ def atualizar_valores(arquivo, variavel):
     
     derrotas, slimes, duendes, gigantes = ler_numeros(arquivo)
 
+    if inimigo.vida <= 0:
+        os.system('cls')
+        t.sleep(0.8)
+        print(f'{inimigo.nome} foi derrotado!')
+        match inimigo.nome:
+            case 'Slime':
+                atualizar_valores(arquivo, 'slimes')
+                derrotas, slimes, duendes, gigantes = ler_numeros(arquivo)
+            case 'Duende':
+                atualizar_valores(arquivo, 'duendes')
+                derrotas, slimes, duendes, gigantes = ler_numeros(arquivo)
+            case 'Gigante':
+                atualizar_valores(arquivo, 'gigantes')
+                derrotas, slimes, duendes, gigantes = ler_numeros(arquivo)
+        press_continue()
+        menu()
+
 class Enemy:
     def __init__(self, nome, vida, ataque): 
         self.nome = nome
@@ -100,6 +117,31 @@ class Player:
                 inimigo.vida -= 25
             case 'Titã':
                 inimigo.vida -= 100
+        if inimigo.vida <= 0:
+            os.system('cls')
+            t.sleep(0.8)
+            print(f'{inimigo.nome} foi derrotado!')
+            t.sleep(1.5)
+            print(f'{self.nome} Venceu!')
+            match inimigo.nome:
+                case 'Slime':
+                    atualizar_valores(arquivo, 'slimes')
+                    derrotas, slimes, duendes, gigantes = ler_numeros(arquivo)
+                case 'Duende':
+                    atualizar_valores(arquivo, 'duendes')
+                    derrotas, slimes, duendes, gigantes = ler_numeros(arquivo)
+                case 'Gigante':
+                    atualizar_valores(arquivo, 'gigantes')
+                    derrotas, slimes, duendes, gigantes = ler_numeros(arquivo)
+            press_continue()
+            match inimigo.nome:
+                case 'Slime':
+                    inimigo.vida = 65
+                case 'Duende':
+                    inimigo.vida = 100
+                case 'Gigante':
+                    inimigo.vida = 200
+            menu()
         print(f'Vida restante do inimigo: {inimigo.vida}')
         press_continue()
 
@@ -110,7 +152,7 @@ def press_continue():
 
 def escolha_random(inimigo, jogador):
     chance = r.randint(1, 100)
-    if chance > 0:
+    if chance > 60:
         inimigo.atacar(jogador)
     else:
         inimigo.curar()
@@ -152,6 +194,8 @@ def batalha(jogador, inimigo):
             press_continue()
             menu()
 
+        os.system('cls')
+        t.sleep(0.8)
         print('Sua vez de jogar!')
         t.sleep(1.5)
         escolha = input('''Selecione uma das opções para seguir com a batalha:
@@ -188,11 +232,11 @@ def selecionar_inimigo():
 Escolha: ''')
     match inimigo_n:
         case '1':
-            inimigo = Enemy('Slime', 50, 10)
+            inimigo = Enemy('Slime', 65, 20)
         case '2':
-            inimigo = Enemy('Duende', 80, 30)
+            inimigo = Enemy('Duende', 100, 45)
         case '3':
-            inimigo = Enemy('Gigante', 150, 65)
+            inimigo = Enemy('Gigante', 200, 75)
         case _:
             print('Digite uma opção válida!')
             press_continue()
@@ -273,8 +317,8 @@ Escolha: ''')
             press_continue()
             menu()
 
+os.system('cls')
 print('''ATENÇÃO!!! Para que este jogo funcione corretamente é necessário que o arquivo "Info.txt" esteja instalado e no mesmo local que este jogo. Se você não possui o arquivo instale-o no seguinte link:
 https://github.com/Jhonatan-Orlandi-de-Abrantes/Simple-RPG''')
 press_continue()
-
 criar_player()
